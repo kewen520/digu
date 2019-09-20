@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="17px" viewBox="0 0 20 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_robot</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="robot" fill-rule="nonzero">
+            <g>
+                <rect id="Rectangle-path" fill="#000000" opacity="0" x="0" y="0" width="16" height="16"></rect>
+                <path d="M0,8 L0,12 C0,12.553125 0.446875,13 1,13 L2,13 L2,7 L1,7 C0.446875,7 0,7.446875 0,8 Z M14.5,3 L11,3 L11,1 C11,0.446875 10.553125,0 10,0 C9.446875,0 9,0.446875 9,1 L9,3 L5.5,3 C4.11875,3 3,4.11875 3,5.5 L3,14 C3,15.103125 3.896875,16 5,16 L15,16 C16.103125,16 17,15.103125 17,14 L17,5.5 C17,4.11875 15.88125,3 14.5,3 Z M8,13 L6,13 L6,12 L8,12 L8,13 Z M7,9.25 C6.309375,9.25 5.75,8.690625 5.75,8 C5.75,7.309375 6.309375,6.75 7,6.75 C7.690625,6.75 8.25,7.309375 8.25,8 C8.25,8.690625 7.690625,9.25 7,9.25 Z M11,13 L9,13 L9,12 L11,12 L11,13 Z M14,13 L12,13 L12,12 L14,12 L14,13 Z M13,9.25 C12.309375,9.25 11.75,8.690625 11.75,8 C11.75,7.309375 12.309375,6.75 13,6.75 C13.690625,6.75 14.25,7.309375 14.25,8 C14.25,8.690625 13.690625,9.25 13,9.25 Z M19,7 L18,7 L18,13 L19,13 C19.553125,13 20,12.553125 20,12 L20,8 C20,7.446875 19.553125,7 19,7 Z" id="Shape" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>

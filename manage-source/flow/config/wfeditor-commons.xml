@@ -1,0 +1,229 @@
+<mxEditor defaultGroup="group" defaultEdge="edge"
+	helpWindowImage="images/help.gif"
+	tasksWindowImage="images/tasks.gif"
+	forcedInserting="0"
+	swimlaneRequired="0">
+	<include name="config/editor-commons.xml"/>
+	<add as="onInit">
+		function ()
+		{
+			//初始化
+			<!-- this.urlPost = globalUrlPost; -->
+		}
+	</add>
+	<Array as="cycleAttributeValues">
+		<add value="#83027F"/>
+		<add value="#66B922"/>
+		<add value="#808913"/>
+		<add value="#CF0056"/>s
+		<add value="#4679B6"/>
+	</Array>
+	<Array as="templates">
+		<add as="group">
+			<Group label="" description="" href="">
+				<mxCell vertex="1" style="group" connectable="0"/>
+			</Group>
+		</add>
+		<add as="edge">
+			<Edge label="" description="">
+				<mxCell edge="1">
+					<mxGeometry as="geometry" relative="1"/>
+				</mxCell>
+			</Edge>
+		</add>
+		<add as="swimlane">
+			<Swimlane label="Swimlane" description="" href="">
+				<mxCell vertex="1" style="swimlane" connectable="0">
+					<mxGeometry as="geometry" width="300" height="160"/>
+				</mxCell>
+			</Swimlane>
+		</add>
+		<add as="task">
+			<Task label="Task" description="" href="" test = "">
+				<mxCell vertex="1" style="rounded">	
+					<mxGeometry as="geometry" width="72" height="32"/>
+				</mxCell>
+			</Task>
+		</add>
+		<add as="question">
+			<Task label="Question" description="" href="" test = "">
+				<mxCell vertex="1" style="rounded">	
+					<mxGeometry as="geometry" width="72" height="32"/>
+				</mxCell>
+			</Task>
+		</add>		
+		<add as="answer">
+			<Task label="Answer" description="" href="" test = "">
+				<mxCell vertex="1" style="rounded">	
+					<mxGeometry as="geometry" width="72" height="32"/>
+				</mxCell>
+			</Task>
+		</add>
+		<add as="subprocess">
+			<Subprocess label="Subprocess" description="" href="">
+				<mxCell vertex="1" style="rounded">		
+					<mxGeometry as="geometry" width="72" height="32"/>
+				</mxCell>
+			</Subprocess>
+		</add>
+		<add as="shape">
+			<Shape label="" description="" href="">
+				<mxCell vertex="1" style="rounded">		
+					<mxGeometry as="geometry" width="32" height="32"/>
+				</mxCell>
+			</Shape>
+		</add>
+		<add as="symbol">
+			<Symbol label="Symbol" description="" href="">
+				<mxCell vertex="1" style="symbol;image=images/symbols/event.png">		
+					<mxGeometry as="geometry" width="32" height="32"/>
+				</mxCell>
+			</Symbol>
+		</add>
+		<!-- 自定义模板开始 -->
+		<add as="start">
+			<Start label="开场白" nodeType="start" speechcraft="" intentionLevel="F" isAllow="false" isSkip="false" isEXCSkip="false" excSkipNode="">
+				<mxCell vertex="1" style="start;">	
+					<mxGeometry as="geometry" width="70" height="30"/>
+				</mxCell>
+			</Start>
+		</add>	
+		<add as="answer">
+			<Answer label="客户意图" nodeType="answer" keywords="" intentionId="" level="" jumpType="" jumpItemType="">
+				<mxCell vertex="1" style="answer;">	
+					<mxGeometry as="geometry" width="90" height="30"/>
+				</mxCell>
+			</Answer>
+		</add>	
+		<add as="robot">
+			<Robot label="机器人话术" nodeType="robot" speechcraft="" intentionLevel="" isAllow="false" isSkip="false" isEnd="false" isEXCSkip="false" excSkipNode="">
+				<mxCell vertex="1" style="robot;">	
+					<mxGeometry as="geometry" width="100" height="30"/>
+				</mxCell>
+			</Robot>
+		</add>	
+		<add as="end">
+			<End label="结束语" nodeType="end" speechcraft="" intentionLevel="" isEnd="true" isAllow="false"  artificialIntention="">
+				<mxCell vertex="1" style="end;">
+					<mxGeometry as="geometry" width="70" height="30"/>
+				</mxCell>
+			</End>
+		</add>	
+		<!-- 自定义模板结束 -->		
+	</Array>
+	<add as="createTasks"><![CDATA[
+		function (div)
+		{
+			var off = 30;
+			
+			if (this.graph != null)
+			{
+				var layer = this.graph.model.root.getChildAt(0);
+				mxUtils.para(div,  mxResources.get('examples'));
+				mxUtils.linkInvoke(div, mxResources.get('newDiagram'), this,
+					'open', 'diagrams/empty.xml', off);
+				mxUtils.br(div);
+				mxUtils.linkInvoke(div, mxResources.get('swimlanes'), this,
+					'open', 'diagrams/swimlanes.xml', off);
+				mxUtils.br(div);
+				mxUtils.linkInvoke(div, mxResources.get('travelBooking'), this,
+					'open', 'diagrams/travel-booking.xml', off);
+				mxUtils.br(div);
+				
+				if (!this.graph.isSelectionEmpty())
+				{
+					var cell = this.graph.getSelectionCell();
+					if (this.graph.getSelectionCount() == 1 &&
+						(this.graph.model.isVertex(cell) &&
+						cell.getEdgeCount() > 0) || this.graph.isSwimlane(cell))
+					{
+						mxUtils.para(div, 'Layout');
+						mxUtils.linkAction(div, mxResources.get('verticalTree'),
+							this, 'verticalTree', off);
+						mxUtils.br(div);
+						mxUtils.linkAction(div, mxResources.get('horizontalTree'),
+							this, 'horizontalTree', off);
+						mxUtils.br(div);
+					}
+					
+					mxUtils.para(div, 'Format');
+					
+					if (mxUtils.isNode(cell.value, 'Symbol'))
+					{
+						mxUtils.linkAction(div, mxResources.get('image'),
+							this, 'image', off);
+						mxUtils.br(div);
+					}
+					else
+					{
+						mxUtils.linkAction(div, mxResources.get('opacity'),
+							this, 'opacity', off);
+						mxUtils.br(div);
+						if (this.graph.model.isVertex(cell) ||
+							(cell.style != null && 
+							cell.style.indexOf("arrowEdge") >= 0))
+						{
+							mxUtils.linkAction(div, mxResources.get('gradientColor'),
+								this, 'gradientColor', off);
+							mxUtils.br(div);
+						}
+						if (this.graph.model.isEdge(cell))
+						{
+							mxUtils.linkAction(div, 'Straight Connector', this, 'straightConnector', off);
+							mxUtils.br(div);
+							mxUtils.linkAction(div, 'Elbow Connector', this, 'elbowConnector', off);
+							mxUtils.br(div);
+							mxUtils.linkAction(div, 'Arrow Connector', this, 'arrowConnector', off);
+							mxUtils.br(div);
+						}
+					}
+					
+					mxUtils.linkAction(div, 'Rounded', this, 'toggleRounded', off);
+					mxUtils.br(div);
+					if (this.graph.isSwimlane(cell) || this.graph.model.isEdge(cell))
+					{
+						mxUtils.linkAction(div, 'Orientation', this, 'toggleOrientation', off);
+						mxUtils.br(div);
+					}
+					
+					if (this.graph.getSelectionCount() > 1)
+					{
+						mxUtils.para(div, mxResources.get('align'));
+						mxUtils.linkAction(div, mxResources.get('left'),
+							this, 'alignCellsLeft', off);
+						mxUtils.br(div);
+						mxUtils.linkAction(div, mxResources.get('center'),
+							this, 'alignCellsCenter', off);
+						mxUtils.br(div);
+						mxUtils.linkAction(div, mxResources.get('right'),
+							this, 'alignCellsRight', off);
+						mxUtils.br(div);
+						mxUtils.linkAction(div, mxResources.get('top'),
+							this, 'alignCellsTop', off);
+						mxUtils.br(div);
+						mxUtils.linkAction(div, mxResources.get('middle'),
+							this, 'alignCellsMiddle', off);
+						mxUtils.br(div);
+						mxUtils.linkAction(div, mxResources.get('bottom'),
+							this, 'alignCellsBottom', off);
+						mxUtils.br(div);
+					}
+					
+					mxUtils.para(div, mxResources.get('selection'));
+					mxUtils.linkAction(div, mxResources.get('clearSelection'),
+						this, 'selectNone', off);
+					mxUtils.br(div);
+				}
+				else if (layer.getChildCount() > 0)
+				{
+					mxUtils.para(div, mxResources.get('selection'));
+					mxUtils.linkAction(div, mxResources.get('selectAll'),
+						this, 'selectAll', off);
+					mxUtils.br(div);
+				}
+				
+				mxUtils.br(div);
+			}
+		}
+	]]></add>
+</mxEditor>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_user</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="robot-copy-2" transform="translate(-1.000000, 0.000000)" fill-rule="nonzero">
+            <g id="user" transform="translate(-2.000000, -3.000000)">
+                <rect id="Rectangle-path" fill="#000000" opacity="0" x="0" y="0" width="24" height="24"></rect>
+                <path d="M11.9759443,3.28886616 C14.3868857,3.28886616 16.3412246,5.21130675 16.3412246,7.58243512 C16.3412246,9.95406715 14.3869097,11.8766037 11.9759443,11.8766037 C9.56509887,11.8766037 7.61078388,9.95406715 7.61078388,7.58243513 C7.61075991,5.2107551 9.56574642,3.28886616 11.9759443,3.28886616 Z M10.0815887,13.0443719 L13.9183873,13.0443719 C17.2025287,13.0443719 19.8644839,15.2160035 19.8644839,18.4465892 L19.8644839,18.8233737 C19.8644839,20.0964786 17.2019531,20.7111099 13.9183873,20.7111099 L10.0815887,20.7111099 C6.79735139,20.7111099 4.13549215,20.143007 4.13549215,18.8233737 L4.13549215,18.4465892 C4.1355401,15.2160035 6.79737539,13.0443719 10.0815887,13.0443719 Z" id="Shape" fill="#FFFFFF"></path>
+            </g>
+        </g>
+    </g>
+</svg>

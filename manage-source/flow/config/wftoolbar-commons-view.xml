@@ -1,0 +1,25 @@
+<mxDefaultToolbar>
+	<!-- <add as="exit" action="exit" icon="images/icon_exit.png"/>
+	<separator/> -->
+	<!-- <add as="select" mode="select" icon="images/select.gif"/> -->
+	<add as="pan" mode="pan" icon="images/icon_drag to move.svg"/>
+	<separator/>
+	<add as="zoomIn" action="zoomIn" icon="images/icon_enlarge.svg"/>
+	<add as="zoomOut" action="zoomOut" icon="images/icon_shrink.svg"/>
+	<!-- <add as="fit" action="fit" icon="images/zoom.gif"/>
+	<add as="actualSize" action="actualSize" icon="images/zoomactual.gif"/> -->	
+<!--
+	<add as="show" action="show" icon="images/preview.gif"/>
+	<add as="print" action="print" icon="images/print.gif"/>
+	<add as="exportImage" action="exportImage" icon="images/image.gif"/>
+	<separator/>
+	<add as="select" mode="select" icon="images/select.gif"/>
+	<add as="pan" mode="pan" icon="images/pan.gif"/>
+	<separator/>
+	<add as="fit" action="fit" icon="images/zoom.gif"/>
+	<add as="zoomIn" action="zoomIn" icon="images/zoomin.gif"/>
+	<add as="zoomOut" action="zoomOut" icon="images/zoomout.gif"/>
+	<add as="actualSize" action="actualSize" icon="images/zoomactual.gif"/>
+	<add as="zoom" action="zoom" icon="images/zoom.gif"/>
+-->
+</mxDefaultToolbar>

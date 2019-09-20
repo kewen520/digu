@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>ico_user</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="-74.5954827%" y1="89.9333298%" x2="149.507212%" y2="89.9333298%" id="linearGradient-1">
+            <stop stop-color="#69C0FF" offset="0%"></stop>
+            <stop stop-color="#63A0FF" offset="57.9446667%"></stop>
+            <stop stop-color="#5E83FF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="1-登陆注册（手机号）" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="登录" transform="translate(-961.000000, -384.000000)" fill="url(#linearGradient-1)">
+            <g id="Group-6" transform="translate(960.000000, 384.000000)">
+                <g id="Group-4">
+                    <g id="Group-2" transform="translate(1.000000, 0.000000)">
+                        <g id="ico_user">
+                            <path d="M13,3 C10.2363287,3 8,5.23632875 8,8 C8,10.7636725 10.2363287,13 13,13 C15.7636725,13 18,10.7636725 18,8 C18,5.23632875 15.7636725,3 13,3 Z M13,15.5 C5.40234375,15.5 3,20.5 3,20.5 L3,23 L23,23 L23,20.5 C23,20.5 20.5976562,15.5 13,15.5 Z"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

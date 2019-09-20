@@ -1,0 +1,175 @@
+<html>
+<head>
+<title>话术流程设计器</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+<link rel="stylesheet" type="text/css" href="./css/element-ui.css">
+<link rel="stylesheet" type="text/css" href="./css/workfloweditor.css">
+<script>
+	GLOBAL_VARIABLES_SCRIPT
+</script>
+</head>
+<body onload="loadWorkFlowEditor();">
+	<div id="btn-group">
+		<div id="exit">
+			<button type="button" class="el-button el-button--small" onclick="showExitDialog();">
+				<span class="el-button-exit-span">退出</span>
+			</button>
+		</div>
+		<div id="toolbar">
+			<!-- Toolbar Here -->
+		</div>
+		<div id="approve">
+			<button type="button" class="el-button el-button--primary el-button--small" onclick="approve();">
+				<span class="el-button-approve-span">提交审批</span>
+			</button>
+		</div>
+	</div>
+	<table id="splash" width="100%" height="100%">
+		<tr>
+			<td align="center" valign="middle"><img src="./images/loading.gif">
+			</td>
+		</tr>
+	</table>
+	
+	<div id="graph" class="base">
+		<!-- Graph Here -->
+	</div>	
+	
+    <div id="_dialogVue">
+    	<!-- Dialog Window Here -->
+		<!-- 录音上传 -->
+		<el-dialog title="录音上传" :visible.sync="dialogRecordVisible">
+			<div>
+				<el-tabs v-model="editRecordTabsValue" @tab-click="handleRecordTabs">
+				<el-tab-pane
+				    :key="item.name"
+				    v-for="(item, index) in editRecordTabs"
+				    :label="item.title"
+				    :name="item.name"
+				  >
+				  	<div>当前话术有动态信息，我们已将话术分开，请分别录音，动态信息部分会继续使用发音人播报。</div>
+					<el-row class="w-table-row" v-for="(item,index) in recordData" :key="index">
+						<el-col :span="1"><i class="iconfont icon-icon_play"></i></el-col>
+						<el-col :span="18">{{item.title}}</el-col>
+						<el-col :span="2" class="icon-box">
+							<i class="iconfont icon-icon_download" @click="downloadRecord(item.id)"></i>
+							<i class="iconfont icon-icon_delete" @click="deleteRecord(item.id)"></i>
+						</el-col>
+						<el-col :span="3">
+							<el-button plain size="mini" class="btn-upload">上传
+								<el-input type="file" id="_file" @change="uploadRecord(item.id)"></el-input>
+							</el-button>
+						</el-col>
+					</el-row>
+			  	</el-tab-pane>
+			  </el-tabs>
+			</div>
+			
+			<div slot="footer" class="dialog-footer">
+				<el-button @click="dialogRecordVisible = false">取 消</el-button>
+				<el-button type="primary" @click="dialogRecordVisible = false;">确 定</el-button>
+			</div>
+		</el-dialog>
+
+		<!-- 话术设置 -->
+		<el-dialog title="话术设置" class="speechDialog" :visible.sync="dialogSpeechVisible">
+			<el-form :model="speechForm">
+				<el-form-item label="话术名称" :label-width="formLabelWidth">
+					<el-input v-model="speechForm.name" autocomplete="off"></el-input>
+				</el-form-item>
+				<el-form-item label="所属行业" :label-width="formLabelWidth">
+					<el-select v-model="speechForm.region" placeholder="请选择所属行业">
+						<el-option label="区域一" value="shanghai"></el-option>
+						<el-option label="区域二" value="beijing"></el-option>
+					</el-select>
+				</el-form-item>
+			</el-form>
+			<div slot="footer" class="w-dialog dialog-footer">
+				<el-button @click="dialogSpeechVisible = false">取 消</el-button>
+				<el-button type="primary" @click="dialogSpeechVisible = false">确 定</el-button>
+			</div>
+		</el-dialog>
+
+		<!-- 试拨 -->
+		<el-dialog title="试拨" class="w-dialog dialDialog" :visible.sync="dialogDialVisible">
+			<el-form :model="dialForm">
+				<el-form-item label="发音人" :label-width="formLabelWidth">
+					<el-select v-model="dialForm.region" placeholder="请选择发音人">
+						<el-option label="发音人1" value="shanghai"></el-option>
+						<el-option label="发音人2" value="beijing"></el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item label="试拨模式" :label-width="formLabelWidth">
+					<el-radio-group v-model="dialForm.resource" @change="dialChange">
+						<el-radio label="1">电话试拨</el-radio>
+						<el-radio label="2">在线试拨</el-radio>
+					</el-radio-group>
+				</el-form-item>
+				<el-form-item label="" :label-width="formLabelWidth" v-show="dialRadioInput">
+					<el-input v-model="speechForm.iphone" placeholder="输入试拨接听号码"></el-input>
+				</el-form-item>
+			</el-form>
+			<div slot="footer" class="dialog-footer">
+				<el-button @click="dialogDialVisible = false">取 消</el-button>
+				<el-button type="primary" @click="dialogDialVisible = false">确 定</el-button>
+			</div>
+		</el-dialog>
+		
+		<!-- 在线试拨 -->
+		<el-dialog title="在线试拨" class="w-dialog onlineDialog" :visible.sync="dialogOnlineVisible">
+			<div class="dialog-body-center">
+				<p>正在呼叫您的电脑，接通后请用麦克风进行对话</p>
+				<div class="onlineTimeBox">
+					<span class="time">00:12</span>
+					<span class="phone_btn"><i class="el-icon-phone"></i></span>
+				</div>
+			</div>
+		</el-dialog>
+		
+		<!-- 错误提示 -->
+		<el-dialog title="错误提示" class="w-dialog errorDialog" :visible.sync="dialogErrorVisible">
+			<div>
+				<p>当前话术有误，请检查提示错误的节点，更正后再提交试拨</p>
+			</div>
+			<div slot="footer" class="dialog-footer">
+				<el-button type="primary" @click="dialogErrorVisible = false">确 定</el-button>
+			</div>
+		</el-dialog>
+
+        <!-- 退出提示框 -->
+        <!-- <el-dialog title="退出提示" :visible.sync="exitVisible" width="400px" @close="closeExitDialog">
+            <div >{{exitText}}</div>
+            <span slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="exit">确 定</el-button>
+            </span>
+		</el-dialog> -->
+		
+		<!-- 话术试听 -->
+        <el-dialog title="话术试听" :visible.sync="videoVisible" width="600px">
+            <div class="video-box">
+		        <div>
+		            <span class="viewItemPlay"><i class="w_icon_pause" :class="{'w_icon_play':videoPlay}" @click="handlePlaying"></i></span>
+		            <div @mousedown="barDown">
+		                <el-slider class="video-slider" v-model="viewPlayValue" :show-tooltip="false" @change="changeSlider"></el-slider>
+		            </div>
+		            <span class="video-time">{{currentMusic.currentTime | format}}/{{currentMusic.duration | formatDuration}}</span>
+		        </div>
+		        <audio  id="audioEle" ref="w_audio" loop="" style="width: 0px;" :src="viewSource">
+		            <source src="" type="audio/mpeg">
+		        </audio>
+		    </div>
+        </el-dialog>			
+    </div>
+	
+	<script type="text/javascript" src="./js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="./js/jquery.nicescroll.js"></script>
+	<script type="text/javascript" src="./js/utils.js"></script>
+	<script type="text/javascript" src="./js/vue.js"></script>
+	<script type="text/javascript" src="./js/element-ui.js"></script>
+	<script type="text/javascript" src="./js/workfloweditor.js"></script>
+	<script type="text/javascript" src="./js/mxApplication.js"></script>
+	<script type="text/javascript" src="./mxGraph/src/js/mxClient.js"></script>
+
+</body>
+</html>

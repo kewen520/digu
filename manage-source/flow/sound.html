@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>音频管理库</title>
+    <meta name="keywords" content="">
+    <meta name="renderer" content="webkit">
+    <meta name="description" content="">
+    <meta http-equiv="content-script-type" content="text/javascript">
+    <meta name="viewport" content="minimal-ui,width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <script type="text/javascript" src="./js/main.js"></script>
+</head>
+
+<body>
+    <div  id="_soundEl" class="sound-page">
+        <div class="sound-top">
+            <el-button type="primary" size="small" icon="el-icon-arrow-left" @click="goBack">返回</el-button>
+        </div>
+        <div class="w-container">
+            <el-card class="box-card sound-card">
+                <div slot="header" class="clearfix">
+                    <el-row>
+                        <el-col :span="5" class="sound-card-left">
+                            <span>音频管理库</span>
+                        </el-col>
+                        <el-col :span="9" >
+                            <el-input v-model="select_word" size="small" clearable @change="searchChange" placeholder="输入音频名称或文本" class="handle-input mr10"></el-input>
+                            <el-button type="primary" size="small" icon="search" @click="search">搜索</el-button> 
+                        </el-col>
+                        <el-col :span="10" class="sound-card-right">
+                            <el-button type="primary" size="small" class="upload-btn-sound">上传音频
+                            <input multiple="multiple" ref="upload_input" type="file" id="file" @change="uploadSoundFileList" ></el-button>
+                            <el-button type="primary" size="small" :disabled="disabled" @click="createSoundConfigItemExcelFile">导出表格</el-button>
+                            <el-button type="primary" size="small" :disabled="disabled" class="upload-btn-sound" @click="uploadBtn">上传表格</el-button>
+                            <el-button type="primary" size="small" icon="delete" class="sound_top_btn_del" :disabled="del_disabled" @click="delVisible = true">删除</el-button>
+                            <el-button type="primary" size="small" :disabled="del_disabled" @click="batchUse">使用</el-button>
+                        </el-col>
+                    </el-row>
+                </div>
+                <div class="repository-box">
+                    <el-row>
+                        <el-col :span="5" class="repository-menu-box" :style="{height:height+72+'px'}">
+                            <div class="repository-menu-top">文件夹<i class="el-icon-circle-plus" @click="addGroup"></i></div>
+                            <div class="sound-menu">
+                                <el-menu 
+                                    class="repository-menu" 
+                                    default-active="1-0"
+									:unique-opened="true"
+                                    :default-openeds="openeds"
+                                    @open="handleOpen">
+                                    <el-submenu index="1" >
+                                        <template slot="title">
+                                        	<span @click="setActiveGroupType('speech')">话术音频</span>
+                                        </template>
+                                        <draggable v-model="speechMenu" @end="draggableEnd" @start="draggableStart('speech')">
+                                            <el-menu-item 
+                                            :index="`1-${index}`"
+                                            class="repository-menu-item"
+                                            :class="{active:item.index==itemActive,edit:item.isEdit}" 
+                                            v-for="(item,index) in speechMenu" 
+                                            :key="`${index}`">
+                                                <div class="repository-menu-input-box" v-show="item.show">
+                                                    <el-input size="small"
+                                                    v-model="item.configGroupName" 
+                                                    v-if="item.type!=1&&item.type!=2"
+                                                    ></el-input>
+                                                </div>
+                                                
+                                                <span v-show="!item.show" class="groupName" @click="querySoundConfigItemList(item,index,'speech')">{{item.configGroupName}}</span>
+                                                <div class="repository-icon-box edit-box">
+                                                    <i class="el-icon-check" @click="modifySoundConfigGroup(item,index)"></i>
+                                                    <i class="el-icon-close" @click="cancelEdit(item,index)"></i>
+                                                </div>
+                                                <div class="repository-icon-box hover-box" v-if="item.groupFlag!=1&&item.groupFlag!=0">
+                                                    <i class="iconfont icon-ico_move-sort"></i>
+                                                    <i class="iconfont icon-ico_edit-content" @click="editConfigGroupMenu(item,'speech')"></i>
+                                                    <i class="iconfont icon-ico_delete" @click="deletSound(item,index)"></i>
+                                                </div>
+                                            </el-menu-item>
+                                        </draggable>
+                                    </el-submenu>
+                                    <el-submenu index="2">
+                                        <template slot="title">
+                                       		<span @click="setActiveGroupType('knowledge')">知识库音频</span>
+                                        </template>
+                                        <draggable v-model="knowledgeMenu" @end="draggableEnd" @start="draggableStart('knowledge')">
+                                            <el-menu-item 
+                                            :index="`2-${index}`"
+                                            class="repository-menu-item"
+                                            :class="{active:item.index==itemActive,edit:item.isEdit}" 
+                                            v-for="(item,index)  in knowledgeMenu" 
+                                            :key="`${index}`">
+                                                <div class="repository-menu-input-box" v-show="item.show">
+                                                    <el-input size="small"
+                                                    v-model="item.configGroupName" 
+                                                    v-if="item.type!=1&&item.type!=2"
+                                                    ></el-input>
+                                                </div>
+                                                
+                                                <span v-show="!item.show" class="groupName" @click="querySoundConfigItemList(item,index,'knowledge')">{{item.configGroupName}}</span>
+                                                <div class="repository-icon-box edit-box">
+                                                    <i class="el-icon-check" @click="modifySoundConfigGroup(item,index)"></i>
+                                                    <i class="el-icon-close" @click="cancelEdit(item,index)"></i>
+                                                </div>
+                                                <div class="repository-icon-box hover-box" v-if="item.groupFlag!=1&&item.groupFlag!=0">
+                                                    <i class="iconfont icon-ico_move-sort"></i>
+                                                    <i class="iconfont icon-ico_edit-content" @click="editConfigGroupMenu(item,'knowledge')"></i>
+                                                    <i class="iconfont icon-ico_delete" @click="deletSound(item,index)"></i>
+                                                </div>
+                                            </el-menu-item>
+                                        </draggable>
+                                    </el-submenu>
+                                </el-menu>
+                            </div>                            
+                        </el-col>
+                        <el-col :span="19">
+                            <el-table stripe :data="configGroupIdData" 
+                                class="table tb-edit sound-table" 
+                                id="configGroupIdData" 
+                                :height="height" 
+                                ref="configGroupIdData" 
+                                @selection-change="handleSelectionChange">
+                                <el-table-column type="selection" width="60" align="center"></el-table-column>
+                                <el-table-column label="音频名称" prop="fileName" width="400"></el-table-column>
+                                <el-table-column label="文本内容" prop="soundContent" >
+                                    <template slot-scope="scope" >
+                                        <div class="video-edit-box">
+                                            <i class="iconfont icon-icon_play" @click="handleVideo(scope.$index, scope.row)"></i>
+                                            <el-input class="tb-edit-input" v-if="!scope.row.edit" size="small" placeholder="输入文本内容" v-model="scope.row.soundContent" @change="handleChange(scope.$index, scope.row)">></el-input>
+                                            <span v-else class="video-edit-box-text">{{scope.row.soundContent}}</span>
+                                        </div>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column label="更新时间" prop="editTime" width="180"></el-table-column>
+                                <el-table-column label="操作" prop="" width="100">
+                                    <template slot-scope="scope">
+                                        <el-button type="text" :disabled="true" v-if="scope.row.useFlag==1">已被使用</el-button>
+                                        <el-button type="text" v-if="scope.row.useFlag==0" @click="showUseConfirmDialog(scope.row)">使用音频</el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                            <div class="pagination">
+                                <el-pagination background @current-change="handleCurrentChange" 
+                                    layout="total, prev, pager, next,jumper"
+                                    :total="pagination.total"
+                                    :page-size="pagination.pageSize"
+                                    >
+                                </el-pagination>
+                            </div>
+                        </el-col>
+                    </el-row>
+                </div>
+            </el-card>
+        </div>
+        <!--  使用音频 -->
+		<el-dialog :visible.sync="useVisible" width="400px">
+			<span slot="title">
+				填充回答文本
+				<i class="icon-question-left"></i>
+			</span>		
+			<!-- <div >您确定要使用音频"{{this.useRow ? this.useRow.fileName : ''}}"吗？</div> -->
+			<div >您确定要使用音频吗？使用后音频文本将自动填充。</div>
+			<span slot="footer" class="dialog-footer">
+				<!-- <el-button @click="useVisible = false">重新选择</el-button>
+				<el-button type="primary" @click="use">确定使用</el-button> -->
+				<el-button @click="useVisible = false">取消</el-button>
+				<el-button type="primary" @click="use">确定</el-button>
+			</span>
+		</el-dialog>        
+        <!--  删除知识库分类 -->
+        <el-dialog title="删除确认" :visible.sync="removeSoundVisible" width="400px" :append-to-body="true">
+            <div >您确定要删除音频管理库分类<span v-show="removeSoundInfo.configGroupName">“{{removeSoundInfo.configGroupName}}”</span>吗？删除后相关音频也会被删除</div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="removeSoundVisible = false">取 消</el-button>
+                <el-button type="primary" @click="removeSoundConfigGroup">确 定</el-button>
+            </span>
+        </el-dialog>
+        <!-- 删除提示框 -->
+        <el-dialog title="音频删除确认" :visible.sync="delVisible" width="400px" :append-to-body="true">
+            <div >您确定要删除{{this.multipleSelection.length}}条音频吗？删除后将不可恢复？</div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="delVisible = false">取 消</el-button>
+                <el-button type="primary" @click="removeSoundConfigItemList">确 定</el-button>
+            </span>
+        </el-dialog>
+        <!-- 上传提示框 -->
+        <el-dialog title="上传确认" :visible.sync="uploadVisible" width="400px" :append-to-body="true">
+            <div >上传内容可能会覆盖相关已有文本内容！</div>
+            <span slot="footer" class="dialog-footer">
+                
+                <el-button type="primary" class="upload-btn-sound">确 定
+                    <input type="file" :disabled="disabled" id="importFile"  @change="importSoundConfigItemExcelFile" >
+                </el-button>
+            </span>
+        </el-dialog>
+        <!-- 音频播放 -->
+        <el-dialog title="音频" :visible.sync="videoVisible" width="600px" :append-to-body="true">
+		    <div class="video-box">
+		        <div >
+		            <span class="viewItemPlay"><i class="w_icon_pause" :class="{'w_icon_play':videoPlay}" @click="handlePlaying"></i></span>
+		            <div @mousedown="barDown">
+		                <el-slider class="video-slider" v-model="viewPlayValue" :show-tooltip="false" @change="changeSlider"></el-slider>
+		            </div>
+		            <span class="video-time">{{currentMusic.currentTime | format}}<span v-show="currentMusic.durationShow">/{{currentMusic.duration | formatDuration}}</span></span>
+		        </div>
+		        <audio  id="audioEle" ref="w_audio" :src="viewSource" style="width: 0px;" >
+		            <source  >
+		        </audio>		        
+		    </div>            
+        </el-dialog>
+    </div>
+
+	<script type="text/javascript" src="./configBase.js"></script>
+	<script type="text/javascript" src="./js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="./js/jquery.nicescroll.js"></script>
+	<script type="text/javascript" src="./js/vue.js"></script>
+	<script type="text/javascript" src="./js/element-ui.js"></script>
+	<script type="text/javascript" src="./js/Sortable.js"></script>
+	<script type="text/javascript" src="./js/vuedraggable.js"></script>
+	<script type="text/javascript" src="./js/sound.js"></script>
+</body>
+
+</html>

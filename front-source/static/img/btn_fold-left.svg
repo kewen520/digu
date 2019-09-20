@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="68px" viewBox="0 0 16 68" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>btn_fold-left</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="知识库" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="话术-知识库-新增分类" transform="translate(-460.000000, -513.000000)" fill-rule="nonzero">
+            <g id="Group-12" transform="translate(240.000000, 140.000000)">
+                <g id="btn_fold-left" transform="translate(228.000000, 407.000000) scale(-1, 1) translate(-228.000000, -407.000000) translate(220.000000, 373.000000)">
+                    <path d="M16,0 L16,68 L4,68 C1.790861,68 0,66.209139 0,64 L0,4 C0,1.790861 1.790861,-4.05812251e-16 4,0 L16,0 Z" id="Rectangle-6" fill="#C9D0D8"></path>
+                    <g id="fold-button" transform="translate(4.000000, 25.000000)" fill="#FFFFFF">
+                        <path d="M8.99997412,8.96715254 C8.99701589,9.20415886 8.90883418,9.43185802 8.7520865,9.60723773 L1.69682333,17.6373974 C1.47510553,17.9182447 1.1186356,18.0509629 0.771073444,17.9820658 C0.423511288,17.9131686 0.142116685,17.6540067 0.0402936567,17.3090241 C-0.0615293715,16.9640415 0.0329941994,16.590073 0.2857707,16.3378305 L6.7689855,8.96715254 L0.266702421,1.57707804 C-0.0492802358,1.17682667 -0.00391699188,0.595434786 0.370178053,0.250896581 C0.744273098,-0.0936416232 1.31750887,-0.0819739252 1.67775505,0.277511133 L8.7520865,8.30767083 C8.91323906,8.48800782 9.00173825,8.72345158 8.99997412,8.96715254 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

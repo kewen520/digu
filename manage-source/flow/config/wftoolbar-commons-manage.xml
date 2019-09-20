@@ -1,0 +1,8 @@
+<mxDefaultToolbar>
+	<add as="pan" mode="pan" icon="images/icon_drag to move.svg"/>
+	<separator/>
+	<add as="zoomIn" action="zoomIn" icon="images/icon_enlarge.svg"/>
+	<add as="zoomOut" action="zoomOut" icon="images/icon_shrink.svg"/>
+	<!-- <add as="fit" action="fit" icon="images/zoom.gif"/>
+	<add as="actualSize" action="actualSize" icon="images/zoomactual.gif"/> -->	
+</mxDefaultToolbar>

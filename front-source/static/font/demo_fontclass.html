@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>IconFont</title>
+    <link rel="stylesheet" href="demo.css">
+    <link rel="stylesheet" href="iconfont.css">
+</head>
+<body>
+    <div class="main markdown">
+        <h1>IconFont 图标</h1>
+        <ul class="icon_lists clear">
+            
+                <li>
+                <i class="icon iconfont icon-ico_choosed"></i>
+                    <div class="name">ico_choosed</div>
+                    <div class="fontclass">.icon-ico_choosed</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-ico_home"></i>
+                    <div class="name">ico_home</div>
+                    <div class="fontclass">.icon-ico_home</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-ico_chat"></i>
+                    <div class="name">ico_chat</div>
+                    <div class="fontclass">.icon-ico_chat</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-ico_clock"></i>
+                    <div class="name">ico_clock</div>
+                    <div class="fontclass">.icon-ico_clock</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-ico_conversation"></i>
+                    <div class="name">ico_conversation</div>
+                    <div class="fontclass">.icon-ico_conversation</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-ico_incorrect"></i>
+                    <div class="name">ico_incorrect</div>
+                    <div class="fontclass">.icon-ico_incorrect</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-ico_log-out"></i>
+                    <div class="name">ico_log-out</div>
+                    <div class="fontclass">.icon-ico_log-out</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-ico_message"></i>
+                    <div class="name">ico_message</div>
+                    <div class="fontclass">.icon-ico_message</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-ico_invisible"></i>
+                    <div class="name">ico_invisible</div>
+                    <div class="fontclass">.icon-ico_invisible</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-ico_percentage"></i>
+                    <div class="name">ico_percentage</div>
+                    <div class="fontclass">.icon-ico_percentage</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-ico_task"></i>
+                    <div class="name">ico_task</div>
+                    <div class="fontclass">.icon-ico_task</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-icon_blue-cube"></i>
+                    <div class="name">icon_blue-cube</div>
+                    <div class="fontclass">.icon-icon_blue-cube</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-ico_account"></i>
+                    <div class="name">ico_account</div>
+                    <div class="fontclass">.icon-ico_account</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-icon_green-cube"></i>
+                    <div class="name">icon_green-cube</div>
+                    <div class="fontclass">.icon-icon_green-cube</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-ico_phone-call"></i>
+                    <div class="name">ico_phone-call</div>
+                    <div class="fontclass">.icon-ico_phone-call</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-ico_tasks"></i>
+                    <div class="name">ico_tasks</div>
+                    <div class="fontclass">.icon-ico_tasks</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-ico-menu"></i>
+                    <div class="name">ico-menu</div>
+                    <div class="fontclass">.icon-ico-menu</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-icon_complaint"></i>
+                    <div class="name">icon_complaint</div>
+                    <div class="fontclass">.icon-icon_complaint</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-icon_help"></i>
+                    <div class="name">icon_help</div>
+                    <div class="fontclass">.icon-icon_help</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-icon_complaint1"></i>
+                    <div class="name">icon_complaint</div>
+                    <div class="fontclass">.icon-icon_complaint1</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-ico_wallet"></i>
+                    <div class="name">ico_wallet</div>
+                    <div class="fontclass">.icon-ico_wallet</div>
+                </li>
+            
+                <li>
+                <i class="icon iconfont icon-ico_clock1"></i>
+                    <div class="name">ico_clock</div>
+                    <div class="fontclass">.icon-ico_clock1</div>
+                </li>
+            
+        </ul>
+
+        <h2 id="font-class-">font-class引用</h2>
+        <hr>
+
+        <p>font-class是unicode使用方式的一种变种，主要是解决unicode书写不直观，语意不明确的问题。</p>
+        <p>与unicode使用方式相比，具有如下特点：</p>
+        <ul>
+        <li>兼容性良好，支持ie8+，及所有现代浏览器。</li>
+        <li>相比于unicode语意明确，书写更直观。可以很容易分辨这个icon是什么。</li>
+        <li>因为使用class来定义图标，所以当要替换图标时，只需要修改class里面的unicode引用。</li>
+        <li>不过因为本质上还是使用的字体，所以多色图标还是不支持的。</li>
+        </ul>
+        <p>使用步骤如下：</p>
+        <h3 id="-fontclass-">第一步：引入项目下面生成的fontclass代码：</h3>
+
+
+        <pre><code class="lang-js hljs javascript"><span class="hljs-comment">&lt;link rel="stylesheet" type="text/css" href="./iconfont.css"&gt;</span></code></pre>
+        <h3 id="-">第二步：挑选相应图标并获取类名，应用于页面：</h3>
+        <pre><code class="lang-css hljs">&lt;<span class="hljs-selector-tag">i</span> <span class="hljs-selector-tag">class</span>="<span class="hljs-selector-tag">iconfont</span> <span class="hljs-selector-tag">icon-xxx</span>"&gt;&lt;/<span class="hljs-selector-tag">i</span>&gt;</code></pre>
+        <blockquote>
+        <p>"iconfont"是你项目下的font-family。可以通过编辑项目查看，默认是"iconfont"。</p>
+        </blockquote>
+    </div>
+</body>
+</html>

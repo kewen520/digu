@@ -1,0 +1,13 @@
+{
+  "apps":[{
+    "name": "digu",
+    "script": "server/router.js",
+    "instances": "1",
+    "exec_mode" : "cluster",
+    "output": "/dev/null",
+    "error": "/dev/null",
+    "env": {
+      "NODE_ENV": "dev"
+    }
+  }]
+}

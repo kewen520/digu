@@ -1,0 +1,55 @@
+<!-- =============================意图编辑器================================-->
+<!-- 意图模板 -->
+<span class="intent-label">{{mxResources.get('intentionId')}}</span>
+<el-select v-model="intentId" placeholder="请选择意图模板 " filterable clearable @input="changeIntentionTemplate" :disabled="isDisabled">
+	<el-option
+		v-for="item in intentTemplateData"
+		:key="item.id"
+		:label="item.intentionName"
+		:value="item.id">
+	</el-option>
+</el-select>
+<!-- 分类级别 -->
+<span class="intent-label">{{mxResources.get('level')}}</span>
+<el-select v-model="intentLevel" placeholder="请选择分类级别" filterable clearable @input="changeIntentionLevel" :disabled="isDisabled">
+	<el-option
+		v-for="item in intentLevelData"
+		:key="item.value"
+		:label="item.label"
+		:value="item.value">
+	</el-option>
+</el-select>
+<!-- 标题 -->
+<span class="intent-label">{{mxResources.get('label')}}</span>
+<el-input  v-model="intentLabel" placeholder="请输入标题" @input="changeLabel" :disabled="isDisabled">
+</el-input>
+<!-- 标题 -->
+<span class="intent-label" style="vertical-align: top;margin-top: 16px;">{{mxResources.get('keywords')}}</span>
+<el-input type="textarea" v-model="intentKeywords" placeholder="如有多条语料请用英文“|”隔开" @input="changeKeywords" :disabled="isDisabled">
+</el-input>
+<!--跳转类型 -->
+<span class="intent-label" style="vertical-align: top;margin-top: 16px;">{{mxResources.get('jumpType')}}</span>
+<el-select v-model="jumpType" filterable clearable :disabled="isDisabled" @change="changeJumpList" @clear="nochangeJumpList">
+	<el-option
+			v-for="item in jumpTypeList"
+			:value="item.value"
+			:key="item.value"
+			:label="item.label">
+	</el-option>
+</el-select>
+<!-- 列表 -->
+<span class="intent-label" style="vertical-align: top;margin-top: 16px;"></span>
+<el-select  v-model="jumpItemType" filterable  placeholder="请选择跳转至哪个话术" :disabled="isDisabled" @change="changejumpItemList" >
+	<el-option
+			v-for="item in jumpItemTypeList"
+			:value="item.value"
+			:key="item.value"
+	        :label="item.label">
+	</el-option>
+</el-select>
+
+
+
+
+
+

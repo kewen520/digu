@@ -1,0 +1,367 @@
+<!-- =============================对话内容================================-->
+<!-- 退出提示框 -->
+<el-dialog title="退出提示" :visible.sync="exitVisible" width="400px">
+	<div >{{exitText}}</div>
+	<span slot="footer" class="dialog-footer">
+		<el-button @click="exit">直接退出</el-button>
+		<el-button type="primary" @click="saveAndExit">保存并退出</el-button>
+	</span>
+</el-dialog>
+
+<!-- 保存提示框 -->
+<el-dialog title="保存提示" :visible.sync="saveVisible" width="400px">
+	<div >{{saveText}}</div>
+	<span slot="footer" class="dialog-footer">
+		<el-button @click="saveVisible = false">取 消</el-button>
+		<el-button type="primary" @click="saveFlow">确 定</el-button>
+	</span>
+</el-dialog>
+
+<!-- 提交审批提示框 -->
+<el-dialog title="提交审核提示" :visible.sync="approveVisible" width="400px">
+	<div >{{approveText}}</div>
+	<span slot="footer" class="dialog-footer">
+		<el-button @click="approveVisible = false">取 消</el-button>
+		<el-button type="primary" @click="saveApprove">保存并提交</el-button>
+	</span>
+</el-dialog>
+
+<!-- 话术设置 -->
+<el-dialog title="话术设置" :visible.sync="dialogSpeechSettingVisible" width="400px">
+	<el-form ref="speechForm" :rules="settingSpeechRules" :model="speechForm">
+		<el-form-item label="话术名称" :label-width="formLabelWidth" prop="speechcraftName">
+			<el-input width="320px"  v-model="speechForm.speechcraftName" autocomplete="off" placeholder="请输入话术名称" maxlength="15" :disabled="isDisabled"></el-input>
+		</el-form-item>
+		<el-form-item label="方案类型" :label-width="formLabelWidth">
+			<el-select v-model="speechForm.speechcraftType" disabled></el-select>
+		</el-form-item>
+		<el-form-item label="所属行业" :label-width="formLabelWidth">
+			<el-select v-model="speechForm.industryName" disabled></el-select>
+		</el-form-item>
+		<el-form-item
+				label="App Key"
+				:label-width="formLabelWidth"
+				class="app-key-copy-item"
+				@mouseenter.native="showAppKeyCopyIcon = true"
+				@mouseleave.native="showAppKeyCopyIcon = true"
+		>
+			<el-input class="is-disabled" ref="speechFormAppKey" width="320px" v-model="speechForm.appKey" readonly></el-input>
+			<i v-if="showAppKeyCopyIcon" class="app-key-copy-icon el-icon-document-copy" @click="appKeyCopy"></i>
+		</el-form-item>
+		<el-form-item :label-width="formLabelWidth">
+			<el-checkbox v-model="speechForm.isArtificial" @change="handleArtificialChange" :disabled="isDisabled">允许挂机转人工</el-checkbox>
+			<el-select v-model="speechForm.artificialIntention" v-if="speechForm.isArtificial" @change="handleartificialIntentionChange"  filterable multiple
+					   placeholder="请选择转人工意图类型" :disabled="isDisabled">
+				<el-option
+						v-for="item in artificialIntentionOptions"
+						:key="item.id"
+						:label="item.label"
+						:value="item.value">
+				</el-option>
+			</el-select>
+			<el-checkbox v-model="speechForm.isInterrupt" @change="handleInterruptChange" :disabled="isDisabled">允许打断(不包含开场白和结束语)
+				<el-tooltip effect="light" placement="bottom-end" popper-class="speech-editor-tip">
+					<div slot="content">{{mxResources.get('isInterruptContent')}}</div>
+					<i class="el-icon-question"></i>
+				</el-tooltip>
+			</el-checkbox>
+		</el-form-item>
+	</el-form>
+	<div slot="footer" class="w-dialog dialog-footer">
+		<el-button @click="dialogSpeechSettingVisible = false">取 消</el-button>
+		<el-button type="primary" @click="setting('speechForm',true)" :disabled="isDisabled">确 定</el-button>
+	</div>
+</el-dialog>
+
+<!-- 打断提示 -->
+<el-dialog title="打断提示" width="30%" :visible.sync="interruptVisible">
+	<span>{{interruptChangeText}}</span>
+	<div slot="footer" class="dialog-footer">
+		<el-button type="primary" @click="cancelInterruptChange">取消</el-button>
+		<el-button type="primary" @click="confirmInterruptChange">确 定</el-button>
+	</div>
+</el-dialog>
+
+<!-- 录音上传 -->
+<el-dialog title="录音上传" :visible.sync="dialogRecordVisible">
+	<div>
+		<el-tabs v-model="editRecordTabsName" @tab-click="handleRecordTabs">
+		<el-tab-pane
+			:key="item.name"
+			v-for="(item, index) in editRecordTabs"
+			:label="item.title"
+			:name="item.name"
+			>
+			<div>当前话术有动态信息，我们已将话术分开，请分别录音，动态信息部分会继续使用发音人播报。</div>
+			<el-row class="w-table-row" v-for="(item,index) in recordData" :key="item.id">
+				<el-col :span="1"><i class="iconfont icon-icon_play"></i></el-col>
+				<el-col :span="18">{{item.title}}</el-col>
+				<el-col :span="2" class="icon-box">
+					<i class="iconfont icon-icon_download" @click="downloadRecord(item.id)"></i>
+					<i class="iconfont icon-icon_delete" @click="deleteRecord(item.id)"></i>
+				</el-col>
+				<el-col :span="3">
+					<el-button plain size="mini" class="btn-upload">上传
+						<el-input ref="uploadFile" type="file" :id="fileId(item.id)" @change="uploadRecord(item.id)" accept=".wav"></el-input>
+					</el-button>
+				</el-col>
+			</el-row>
+		</el-tab-pane>
+		</el-tabs>
+	</div>
+	
+	<div slot="footer" class="dialog-footer">
+		<el-button @click="dialogRecordVisible = false">取 消</el-button>
+		<el-button type="primary" @click="dialogRecordVisible = false">确 定</el-button>
+	</div>
+</el-dialog>
+
+<!-- 试拨 -->
+<el-dialog title="试拨" class="w-dialog dialDialog" :visible.sync="dialogDialVisible">
+	<el-form :model="dialForm">
+		<el-form-item label="发音人" :label-width="formLabelWidth">
+			<el-select v-model="dialForm.region" placeholder="请选择发音人">
+				<el-option label="发音人1" value="shanghai"></el-option>
+				<el-option label="发音人2" value="beijing"></el-option>
+			</el-select>
+		</el-form-item>
+		<el-form-item label="试拨模式" :label-width="formLabelWidth">
+			<el-radio-group v-model="dialForm.resource" @change="dialChange">
+				<el-radio label="1">电话试拨</el-radio>
+				<el-radio label="2">在线试拨</el-radio>
+			</el-radio-group>
+		</el-form-item>
+		<el-form-item label="" :label-width="formLabelWidth" v-show="dialRadioInput">
+			<el-input v-model="speechForm.iphone" placeholder="输入试拨接听号码"></el-input>
+		</el-form-item>
+	</el-form>
+	<div slot="footer" class="dialog-footer">
+		<el-button @click="dialogDialVisible = false">取 消</el-button>
+		<el-button type="primary" @click="dialogDialVisible = false">确 定</el-button>
+	</div>
+</el-dialog>
+
+<!-- 在线试拨 -->
+<el-dialog title="在线试拨" class="w-dialog onlineDialog" :visible.sync="dialogOnlineVisible">
+	<div class="dialog-body-center">
+		<p>正在呼叫您的电脑，接通后请用麦克风进行对话</p>
+		<div class="onlineTimeBox">
+			<span class="time">00:12</span>
+			<span class="phone_btn"><i class="el-icon-phone"></i></span>
+		</div>
+	</div>
+</el-dialog>
+
+<!-- 话术试听 -->
+<el-dialog  title="话术试听" :visible.sync="videoVisible" width="600px">
+	<div style="width:500px;margin-left: 20px;">
+		<span>请填写变量参数试听文本</span>
+		<div id="testVideoHtml" style="padding:5px;min-height: 200px;border: 1px solid silver">
+
+		</div>
+	</div>
+
+
+	<div class="video-box">
+		<div>
+			<span class="viewItemPlay"><i class="w_icon_pause" :class="{'w_icon_play':videoPlay}" @click="handlePlaying"></i></span>
+			<div @mousedown="barDown">
+				<el-slider class="video-slider" v-model="viewPlayValue" :show-tooltip="false" @change="changeSlider"></el-slider>
+			</div>
+			<span class="video-time">{{currentMusic.currentTime | format}}/{{currentMusic.duration | formatDuration}}</span>
+		</div>
+		<audio  id="audioEle" ref="w_audio" style="width: 0px;" :src="viewSource">
+			<source src="" type="audio/mpeg">
+		</audio>
+	</div>
+</el-dialog>
+
+
+
+<!-- 错误提示 -->
+<el-dialog title="错误提示" class="w-dialog errorDialog" :visible.sync="dialogErrorVisible">
+	<div>
+		<p>当前话术有误，请检查提示错误的节点，更正后再提交试拨</p>
+	</div>
+	<div slot="footer" class="dialog-footer">
+		<el-button type="primary" @click="dialogErrorVisible = false">确 定</el-button>
+	</div>
+</el-dialog>
+
+<!-- 知识库设置 -->
+<el-dialog title="知识库设置" class="w-dialog dialDialog" :visible.sync="knowledgeVisible" custom-class="knowledge-dialog" width="470px">
+	<el-form :model="knowledgeForm">
+		<el-form-item label="使用知识库" :label-width="knowledgeFormLabelWidth">
+			<el-radio-group v-model="knowledgeForm.useKnowledgeFlag" @change="changeUseKnowledge" :disabled="isDisabled">
+				<el-radio :label="1">是</el-radio>
+				<el-radio :label="0">否</el-radio>
+			</el-radio-group>
+		</el-form-item>
+		<div v-if="knowledgeForm.useKnowledgeFlag === 1">
+			<el-form-item label="知识库" :label-width="knowledgeFormLabelWidth">
+				<el-select v-model="knowledgeForm.knowledge" value-key="knowledgeGroupId" filterable multiple placeholder="选择知识库" :disabled="isDisabled">
+					<el-option
+						v-for="item in knowledgeList"
+						:key="item.knowledgeGroupId"
+						:label="item.knowledgeGroupName"
+						:value="item">
+					</el-option>
+				</el-select>
+			</el-form-item>
+			<el-form-item label="单问交互上限" :label-width="knowledgeFormLabelWidth">
+				<el-input-number v-model="knowledgeForm.singleAskedLimit" controls-position="right" :min="1" :max="10" :disabled="isDisabled"></el-input-number>
+				<el-tooltip class="item" effect="light" placement="bottom-end" popper-class="speech-editor-tip">
+			        <div slot="content">同一问题最多允许询问的次数，如果该问题在知识库内配置的答案数小于单问交互次数，则重复循环。</div>
+			        <i class="el-icon-question"></i>
+			    </el-tooltip>				
+			</el-form-item>
+			<el-form-item label="挂机话术" :label-width="knowledgeFormLabelWidth">
+				<div class="speech-content-container" :id="'hungup-speechcraft-content'" :disabled="isDisabled"></div>
+				<div class="w-button-group" style="width: 300px;">
+					<input :id="'knowledge-sound-btn'" type="button" value="音频管理库               " class="sound-btn"
+						style="border-top: 0" onclick="showUploadRecordDialog();" :disabled="isDisabled"> </input>
+				</div>				
+			</el-form-item>
+		</div>
+	</el-form>
+	<div slot="footer" class="dialog-footer">
+		<el-button @click="knowledgeVisible = false">取 消</el-button>
+		<el-button type="primary" @click="saveKnowledge" :disabled="isDisabled">保存</el-button>
+	</div>
+</el-dialog>
+
+<!-- 意图分类级别描述 -->
+<el-dialog title="意图分类级别描述" :visible.sync="intentLevelVisible" width="50%">
+	<!-- 通用模板 -->
+	<el-form v-if="templateType == 1">
+		<el-form-item  label="A" :label-width="intentLevelFormLabelWidth">
+			<div style="width: 90%; float: left;">
+				<el-input v-model="intentLevelForm['A'].initDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+			</div>
+			<el-button type="text" @click="initDescription('A')" :disabled="isDisabled">初始描述</el-button>
+		</el-form-item>
+		<el-form-item  label="B" :label-width="intentLevelFormLabelWidth">
+			<div style="width: 90%; float: left;">
+				<el-input v-model="intentLevelForm['B'].initDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+			</div>
+			<el-button type="text" @click="initDescription('B')" :disabled="isDisabled">初始描述</el-button>
+		</el-form-item>
+		<el-form-item  label="C" :label-width="intentLevelFormLabelWidth">
+			<div style="width: 90%; float: left;">
+				<el-input v-model="intentLevelForm['C'].initDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+			</div>
+			<el-button type="text" @click="initDescription('C')" :disabled="isDisabled">初始描述</el-button>
+		</el-form-item>
+		<el-form-item  label="D" :label-width="intentLevelFormLabelWidth">
+			<div style="width: 90%; float: left;">
+				<el-input v-model="intentLevelForm['D'].initDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+			</div>
+			<el-button type="text" @click="initDescription('D')" :disabled="isDisabled">初始描述</el-button>
+		</el-form-item>
+		<el-form-item  label="E" :label-width="intentLevelFormLabelWidth">
+			<div style="width: 90%; float: left;">
+				<el-input v-model="intentLevelForm['E'].initDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+			</div>
+			<el-button type="text" @click="initDescription('E')" :disabled="isDisabled">初始描述</el-button>
+		</el-form-item>
+		<el-form-item  label="F" :label-width="intentLevelFormLabelWidth">
+			<div style="width: 90%; float: left;">
+				<el-input v-model="intentLevelForm['F'].initDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+			</div>
+			<el-button type="text" @click="initDescription('F')" :disabled="isDisabled">初始描述</el-button>
+		</el-form-item>
+	</el-form>
+	<!-- 会员模板 -->
+	<el-form v-else-if="templateType == 2">
+		<el-form-item  label="A" :label-width="intentLevelFormLabelWidth">
+			<div style="width: 90%; float: left;">
+				<el-input v-model="intentLevelForm['A'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+			</div>
+			<el-button type="text" @click="initDescription('A')" :disabled="isDisabled">初始描述</el-button>
+		</el-form-item>
+		<el-form-item  label="B" :label-width="intentLevelFormLabelWidth">
+			<div style="width: 90%; float: left;">
+				<el-input v-model="intentLevelForm['B'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+			</div>
+			<el-button type="text" @click="initDescription('B')" :disabled="isDisabled">初始描述</el-button>
+		</el-form-item>
+		<el-form-item  label="C" :label-width="intentLevelFormLabelWidth">
+			<div style="width: 90%; float: left;">
+				<el-input v-model="intentLevelForm['C'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+			</div>
+			<el-button type="text" @click="initDescription('C')" :disabled="isDisabled">初始描述</el-button>
+		</el-form-item>
+		<el-form-item  label="D" :label-width="intentLevelFormLabelWidth">
+			<div style="width: 90%; float: left;">
+				<el-input v-model="intentLevelForm['D'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+			</div>
+			<el-button type="text" @click="initDescription('D')" :disabled="isDisabled">初始描述</el-button>
+		</el-form-item>
+		<el-form-item  label="E" :label-width="intentLevelFormLabelWidth">
+			<div style="width: 90%; float: left;">
+				<el-input v-model="intentLevelForm['E'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+			</div>
+			<el-button type="text" @click="initDescription('E')" :disabled="isDisabled">初始描述</el-button>
+		</el-form-item>
+		<el-form-item  label="F" :label-width="intentLevelFormLabelWidth">
+			<div style="width: 90%; float: left;">
+				<el-input v-model="intentLevelForm['F'].memberDescription" autocomplete="off" :disabled="isDisabled"></el-input>
+			</div>
+			<el-button type="text" @click="initDescription('F')" :disabled="isDisabled">初始描述</el-button>
+		</el-form-item>
+	</el-form>
+	<div slot="footer" class="w-dialog dialog-footer">
+		<el-button @click="intentLevelVisible = false">取 消</el-button>
+		<el-button type="primary" @click="saveIntentLevelDesc" :disabled="isDisabled">确 定</el-button>
+	</div>
+</el-dialog>
+
+<!--机器人节点转换为end节点提示-->
+<el-dialog
+		title="提示"
+		:visible.sync="dialogVisibleChild"
+		width="30%"
+		>
+	<span>此操作会使该模块下的话术全部被删除，您确认要继续吗？</span>
+	<span slot="footer" class="dialog-footer">
+				<el-button @click="resetCheckedList('isEnd')">取 消</el-button>
+				<el-button type="primary" @click="changeRobotToEnd" :disabled="isDisabled" >确 定</el-button>
+		  </span>
+</el-dialog>
+
+<!--意图跳转到话术功能-->
+<el-dialog
+		title="提示"
+		:visible.sync="dialogExceptionVisible"
+		width="30%"
+>
+	<span>该意图下已有对应结束模块话术，若选择跳转话术，该意图下的所有{{removeCellTypeName}}将全部删除</span>
+	<span slot="footer" class="dialog-footer">
+				<el-button @click="dialogExceptionVisible = false">取 消</el-button>
+				<el-button type="primary" @click="exceptionFunc":disabled="isDisabled" >确 定</el-button>
+		  </span>
+</el-dialog>
+
+<el-dialog
+		title="敏感词警告"
+		:visible.sync="dialogSensitiveWordVisible"
+		width="30%"
+>
+	<span>您当前话术含有敏感词汇({{sensitiveWord}})！请检查无误后再提交审核！</span>
+	<span slot="footer" class="dialog-footer">
+				<!--<el-button @click="dialogSensitiveWordVisible = false">取 消</el-button>-->
+				<el-button type="primary"  @click="dialogSensitiveWordVisible = false" >确 定</el-button>
+  	</span>
+</el-dialog>
+
+<el-dialog
+		title="取消跳转"
+		:visible.sync="dialognoJumpVisible"
+		width="30%"
+>
+	<span>确定取消吗？</span>
+	<span slot="footer" class="dialog-footer">
+				<el-button @click="dialognoJumpVisible = false">取 消</el-button>
+				<el-button type="primary"  @click="nochangeJumpConfirm">确 定</el-button>
+  	</span>
+</el-dialog>

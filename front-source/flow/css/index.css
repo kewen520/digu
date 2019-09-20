@@ -1,0 +1,462 @@
+@import "style.css";
+@import "iconfont.css";
+body {
+	background-color: #EDF3FC;
+	background: url('../images/background.jpg');
+}
+
+/* 流程设计器 begin */
+
+div.base {
+	position: absolute;
+	overflow: hidden;
+	font-family: Arial;
+	font-size: 8pt;
+}
+
+div.base#toolbar {
+	float: right;
+	height: 30px;
+	right: 20px;
+	top: 20px;
+	background-color: white;
+	text-align: right;
+	border-radius: 5px;
+}
+
+#head {
+	padding: 20px 0 0 20px;
+	display: inline-block;
+	float: left;
+	font-size:24px;
+	font-weight: bold;
+	color: #4E5F6F;
+	text-align: left;
+	white-space: nowrap;
+}
+#btn-group {
+	padding: 18px 20px 0 0;
+	display: inline-block;
+	float: right;
+}
+
+#exit {
+	height: 30px;
+	background-color: white;
+	float: right;
+	margin-left: 10px;
+	border-radius: 5px;
+}
+
+#exit button {
+	border: 0px solid #dcdfe6;
+}
+
+#toolbar {
+	height: 32px;
+	background-color: white;
+	float: left;
+	margin-right: 10px;
+	border-radius: 5px;
+}
+
+#toolbar img{
+	height: 16px;
+	margin-top: 8px;
+}
+
+#approve {
+	height: 30px;
+	background-color: white;
+	float: left;
+	margin-left: 10px;
+	border-radius: 5px;
+}
+
+#approve button {
+	border: 0px solid #dcdfe6;
+}
+
+#autoSave {
+	height: 26px;
+	background-color: white;
+	float: left;
+	margin-left: 10px;
+	border-radius: 5px;
+	font-size: 14px;
+	padding-top: 7px;
+}
+
+#errorStatus {
+	background: url(../images/icon_save_failed.png) no-repeat;
+	background-size: contain;
+	padding-left: 25px;
+	margin: 0 7px 0 7px;
+}
+#offlineStatus {
+	background: url(../images/icon_offline_edit.png) no-repeat;
+	background-size: contain;
+	padding-left: 25px;
+	margin: 0 7px 0 7px;
+}
+#successStatus {
+	background: url(../images/icon_saved.png) no-repeat;
+	background-size: contain;
+	padding-left: 25px;
+	margin: 0 7px 0 7px;
+}
+
+#setting {
+	height: 30px;
+	background-color: white;
+	float: left;
+	margin-right: 10px;
+	border-radius: 5px;
+}
+
+#setting button {
+	border: 0px solid #dcdfe6;
+}
+
+#level {
+	height: 30px;
+	background-color: white;
+	float: left;
+	margin-right: 10px;
+	border-radius: 5px;
+}
+
+#level button {
+	border: 0px solid #dcdfe6;
+}
+
+#knowledge {
+	height: 30px;
+	background-color: white;
+	float: left;
+	margin-right: 10px;
+	border-radius: 5px;
+}
+
+#knowledge button {
+	border: 0px solid #dcdfe6;
+}
+
+#save {
+	height: 30px;
+	background-color: white;
+	float: left;
+	border-radius: 5px;
+}
+
+#save button {
+	border: 0px solid #dcdfe6;
+}
+
+#splash {
+	background: white;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 4;
+}
+
+img.mxToolbarItem {
+	margin: 6px;
+}
+
+img.mxToolbarModeSelected {
+	margin-bottom: 4px;
+}
+
+img.mxToolbarItem, img.mxToolbarModeSelected, img.mxToolbarMode{
+	cursor: pointer;
+}
+
+div.base#graph {
+	left: 20px;
+	right: 20px;
+	top: 50px;
+	bottom: 20px
+}
+
+/* 流程设计器 end */
+
+/* 属性窗口 begin */
+
+div.myWindow {
+	-webkit-box-shadow: 3px 3px 12px #C0C0C0;
+	-moz-box-shadow: 3px 3px 12px #C0C0C0;
+	box-shadow: 3px 3px 12px #C0C0C0;
+	background-color: white;
+	border: 0px;
+	position: absolute;
+	overflow: hidden;
+	z-index: 1;
+	border-radius: 5px;
+}
+
+table.myWindow {
+	border-collapse: collapse;
+	table-layout: fixed;
+	font-family: Arial;
+	font-size: 10pt;
+	padding: 0px;
+}
+
+td.myWindowTitle {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 16pt;
+	font-weight: bold;
+	overflow: hidden;
+	padding: 10px;
+	color: black;
+}
+
+hr.myWindowHr {
+	height: 1px;
+	border: none;
+	border-top: 1px solid #E7EDF6;
+}
+
+td.myWindowPane {
+	vertical-align: top;
+	padding: 10px;
+}
+
+div.myWindowPane {
+	overflow: hidden;
+	position: relative;
+	padding: 20px;
+}
+
+td.myWindowPane td {
+	font-family: Arial;
+	font-size: 10pt;
+	text-align: right;
+}
+
+td.myWindowPane input {
+	border-color: #E7EDF6;
+	border-style: solid;
+	border-width: 1px;
+	font-family: Arial;
+	font-size: 10pt;
+	padding: 5px;
+	min-width: 392px;
+	min-height: 20px;
+	border-radius: 3px;
+}
+
+td.myWindowPane textarea {
+	border-color: #E7EDF6;
+	border-style: solid;
+	border-width: 1px;
+	font-family: Arial;
+	font-size: 10pt;
+	padding: 5px;
+	width: 100%;
+	border-radius: 3px;
+}
+
+td.myWindowPane select,
+td.mxWindowPane radio {
+	border-color: #8C8C8C;
+	border-style: solid;
+	border-width: 1px;
+	font-family: Arial;
+	font-size: 10pt;
+	padding: 1px;
+}
+
+td.myWindowPane button {
+	background: url('../images/button.gif') repeat-x;
+	font-family: Arial;
+	font-size: 10pt;
+	padding: 5px;
+	width: 80px;
+	margin: 10px 10px 0px 0px;
+}
+
+table.speechcraft {
+	width: 100%;
+}
+
+/* 属性窗口 end */
+.el-select:hover .el-input__inner{
+	width: 100%;
+}
+.el-select .el-input__inner{
+	width: 100%;
+}
+.el-select>.el-input{
+	padding-top: 10px;
+}
+.el-form-item__content>.el-select>.el-input{
+	padding-top: 0;
+}
+.el-form-item__content>.el-select{
+	display: -webkit-box;
+}
+.el-dialog__body>.el-checkbox{
+	margin: 0;
+	padding: 0 0 10px 80px;
+}
+.el-dialog__body>.el-select {
+    display: -webkit-box;
+    margin-left: 80px;
+}
+.locked{
+	float:left;
+	position:absolute;
+	z-index:999;
+	bottom:50px;
+	color: #c0c4cc;
+	margin-left: 10px;
+}
+.locked img{
+	margin-bottom: -2px;
+	cursor: pointer;
+}
+.hint{
+	z-index: 999;
+    color: #c0c4cc;
+    border: 1px solid #E7EDF6;
+    border-top: 0px;
+    padding: 5px;
+}
+.hint img{
+	margin-bottom: -2px;
+	cursor: pointer;
+}
+.pagination {
+    padding: 10px 0;
+	text-align: right;
+}
+.el-table{
+	height: 87%;
+}
+.disabled {
+	background-color: #f5f7fa;
+	border-color: #e4e7ed;
+	color: #c0c4cc;
+	cursor: not-allowed;
+}
+.speech-content-container{
+	min-height:200px;
+	border: 1px solid #E7EDF6;
+    width: 99.5%;
+    border-radius: 3px;
+}
+.speech-content-container-no-bottom{
+	min-height:200px;
+	border: 1px solid #E7EDF6;
+	border-bottom:0;
+    width: 99.5%;
+    border-radius: 3px;
+}
+.speech-content-container-no-top{
+	min-height:200px;
+	border: 1px solid #E7EDF6;
+	border-top:0;
+    width: 99.5%;
+    border-radius: 3px;
+}
+div.w-button-group input{
+	border-top: 0;
+	padding: 0px;
+	min-width: 202px;
+}
+.sound-record-btn{
+	height: 40px;
+    background-color: white;
+    color: #409EFF;
+    cursor: pointer;
+	background: url(../images/icon_record.png) no-repeat 73% 50%;
+	margin-right: -2px;
+}
+.sound-play-btn{
+	height: 40px;
+    background-color: white;
+    color: #409EFF;
+    cursor: pointer;
+	background: url(../images/icon_play.png) no-repeat 73% 50%;
+	margin-left: -2px;
+}
+.intent-label{
+	padding-right: 10px;
+	display: inline-flex;
+}
+.intention-editor{
+	margin-top: -10px;
+}
+#_intentionEditor input{
+	min-width: 388px
+}
+#_intentionEditor textarea{
+	height: 210px
+}
+.intention-editor>.el-input{
+	padding-top: 10px;
+	max-width: 388px;
+}
+.intention-editor>.el-select>.el-input{
+	padding-top: 10px;
+	max-width: 388px;
+}
+.intention-editor>.el-textarea{
+	padding-top: 10px;
+	max-width: 388px;
+}
+.intent-level-description {
+	line-height: 32px;
+    color: #409EFF;
+    text-decoration: none;
+    width: 56px;
+    vertical-align: middle;
+    cursor: pointer;
+    padding-left: 10px;
+}
+.intent-level-label{
+	padding-right: 10px;
+	display: -webkit-inline-box;
+
+}
+.speech-editor-tip{
+	max-width: 157px;
+}
+.knowledge-dialog>.el-dialog__body{
+	padding: 10px 20px;
+}
+.knowledge-dialog>.el-dialog__footer{
+	padding-top: 0px;
+}
+.knowledge-dialog .speech-content-container{
+	width: 300px;
+}
+.knowledge-dialog .sound-btn{
+    border-color: #E7EDF6;
+    border-style: solid;
+    border-width: 1px;
+    font-family: Arial;
+    font-size: 10pt;
+    padding: 5px;
+    min-width: 302px;
+    min-height: 20px;
+    border-radius: 3px;
+}
+.grayBtn {
+	background: #A9A9A9 !important;
+}
+#testVideoHtml input{
+	border-color: #E7EDF6;
+	border-style: solid;
+	border-width: 1px;
+	font-family: Arial;
+	font-size: 10pt;
+	padding: 5px;
+	min-height: 20px;
+	border-radius: 3px;
+	margin: 5px;
+}

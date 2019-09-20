@@ -1,0 +1,292 @@
+.repository-menu-box {
+	border-right: 1px solid #ebedf0;
+	/* overflow-y: auto; */
+}
+
+.repository-menu-top {
+	padding: 12.5px 20px;
+	font-size: 15px;
+	position: relative;
+	border-bottom: 1px solid #ebedf0;
+}
+
+.repository-menu-top i {
+	float: right;
+	font-size: 16px;
+	color: #FF7B33;
+	cursor: pointer;
+	margin-top: 2px;
+}
+
+.repository-menu {
+	list-style: none;
+}
+
+.repository-menu .repository-menu-item {
+	height: 28px;
+	line-height: 28px;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding: 10px 15px;
+	border-left: 4px solid #fff;
+	position: relative;
+}
+
+.repository-menu .repository-menu-item:hover {
+	background-color: #f7f8fb;
+	border-left: 4px solid #f7f8fb;
+}
+
+.repository-menu .repository-menu-item .repository-menu-input-box {
+	width: 160px;
+	max-width: 80%;
+	float: left;
+	margin-top: -2px;
+}
+
+.repository-menu .repository-menu-item .edit-box {
+	display: none;
+	font-weight: 700;
+}
+
+.repository-menu .repository-menu-item.edit .edit-box {
+	display: block;
+}
+
+.repository-menu .repository-menu-item:hover .hover-box {
+	display: block;
+}
+
+.repository-menu .repository-menu-item.edit .hover-box {
+	display: none;
+}
+
+.repository-menu .repository-menu-item .hover-box {
+	display: none;
+}
+
+.repository-menu .repository-menu-item .repository-icon-box {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+.repository-menu .repository-menu-item .repository-icon-box .el-icon-check
+	{
+	color: #0fd9ac;
+}
+
+.repository-menu .repository-menu-item .repository-icon-box .el-icon-close
+	{
+	color: #f04a61;
+}
+
+.repository-menu .repository-menu-item .repository-icon-box i {
+	font-size: 12px;
+	margin-left: 5px;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.repository-menu .repository-menu-item .repository-icon-box .icon-ico_move-sort
+	{
+	cursor: move;
+}
+
+.repository-menu .repository-menu-item.active {
+	background-color: #f7f8fb;
+	border-left: 4px solid #4e8ff9;
+}
+
+.repository-menu .repository-menu-item .groupName {
+	display: inline-block;
+	width: 130px;
+	cursor: pointer;
+}
+
+.repository-menu .repository-menu-item span {
+	padding-left: 6px;
+}
+
+.sound-page {
+	padding: 20px;
+}
+
+.sound-page .sound-top {
+	margin-bottom: 20px;
+}
+
+.sound-page .el-card__body {
+	padding: 0;
+}
+
+.sound-page .sound-body {
+	margin: 0 auto;
+}
+
+.sound-page .sound-card .sound-card-left {
+	width: 300px;
+	margin-top: 6px;
+	font-weight: normal;
+}
+
+.sound-page .sound-card .sound-card-right {
+	text-align: right;
+}
+
+.handle-input {
+	width: 240px;
+	display: inline-block;
+}
+
+.sound_top_btn_del {
+	float: right;
+}
+
+.upload-btn-sound {
+	position: relative;
+}
+.el-input { position : absolute;
+	left: 0;
+	width: 100%;
+	top: 0;
+	height: 100%;
+	opacity: 0;
+	filter: alpha(opacity = 0);
+}
+.crumbs {
+	display: inline;
+	float: left;
+	margin-top: 0;
+}
+
+.crumbs .link {
+	color: #4E8FF9;
+}
+
+.sound-table .icon-icon_play {
+	float: left;
+	cursor: pointer;
+	color: #4E8FF9;
+}
+
+#file, #importFile {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	opacity: 0;
+}
+
+.video-edit-box .el-input {
+	width: 95%;
+	margin-top: -5px;
+	border: none;
+	vertical-align: middle;
+}
+
+.video-edit-box .el-input .el-input__inner {
+	border: none;
+}
+
+.video-edit-box .video-edit-box-text {
+	margin-left: 5px;
+	padding-top: 5px;
+}
+
+.el-button--small {
+	padding: 9px 15px;
+}
+
+.video-box {
+	width: 410px;
+	height: 40px;
+	margin: 0 auto;
+	position: relative;
+	padding: 0 40px 0 40px;
+	margin-bottom: 30px;
+}
+
+.video-box .viewItemPlay {
+	width: 20px;
+	height: 38px;
+	left: 0;
+	top: 8px;
+	position: absolute;
+}
+
+.video-box .video-slider {
+	width: 360px;
+	float: left;
+}
+
+.video-box .video-time {
+	position: absolute;
+	right: 0;
+	top: 8px;
+}
+
+.el-input--small .el-input__inner {
+	height: 32px;
+	line-height: 32px;
+}
+
+.icon-question-left {
+	float: left;
+	margin-right: 10px;
+}
+
+.icon-question-left:before {
+	content: url('../images/ico_question.svg')
+}
+
+.sound-menu.el-menu-item, .el-menu-item i, .el-submenu__title i {
+	color: #5292f6;
+}
+
+.sound-menu .repository-menu-item {
+	height: 50px;
+	border-left: none;
+}
+
+.sound-menu .repository-menu-item:hover {
+	border-left: none;
+}
+
+.sound-menu .repository-menu-item.active {
+	border-left: none;
+	background-color: transparent;
+}
+
+.sound-menu .el-menu-item:focus, .el-menu-item:hover, .el-submenu__title:hover
+	{
+	background-color: #f7f8fb;
+	color: #5292f6;
+}
+
+.sound-menu .el-submenu.is-active .el-submenu__title {
+	background-color: #F7F8FB;
+	border-left: 4px solid #FF7B33;
+    color: #FF7B33;	
+}
+
+.sound-menu .el-submenu .el-menu-item.is-active {
+	color: #FF7B33;	
+}
+
+.sound-menu .el-submenu.is-active .el-submenu__title i, .el-submenu.is-active .el-submenu__title span
+	{
+	/* color: #5292f6; */
+}
+
+.sound-menu .repository-icon-boxi {
+	margin: 0 3px;
+	width: 10px;
+}
+.el-menu-item:hover, .sound-menu .el-submenu__title:hover {
+    color: #FF7B33;
+}
+.el-pagination.is-background .el-pager li:not(.disabled).active, .el-tabs__active-bar {
+    background-color: #FF7B33;
+}
