@@ -50,7 +50,7 @@
     "mavon-editor": "^2.5.4",
     "moment": "^2.24.0",
     "nodemon": "^1.19.1",
-    "pm2": "^3.5.1",
+    "pm2": "^5.2.0",
     "query-string": "^6.8.3",
     "request": "^2.88.0",
     "stream-to-string": "^1.2.0",
